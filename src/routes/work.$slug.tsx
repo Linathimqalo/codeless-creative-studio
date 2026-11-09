@@ -35,7 +35,7 @@ export const Route = createFileRoute("/work/$slug")({
 function ProjectPage() {
   const { project: p } = Route.useLoaderData();
   const idx = projects.findIndex((x) => x.slug === p.slug);
-  const next = projects[(idx + 1) % projects.length];
+  const next = projects[(idx + 1) % projects.length] ?? projects[0]!;
   const sections = [
     { label: "The challenge", body: p.challenge },
     { label: "Our approach", body: p.approach },

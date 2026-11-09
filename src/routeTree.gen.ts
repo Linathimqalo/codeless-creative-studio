@@ -11,6 +11,8 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as ContactRouteImport } from './routes/contact'
+import { Route as ProjectIntakeRouteImport } from './routes/project-intake'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as ValuePacksRouteImport } from './routes/value-packs'
 import { Route as WorkIndexRouteImport } from './routes/work.index'
@@ -24,6 +26,16 @@ const IndexRoute = IndexRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjectIntakeRoute = ProjectIntakeRouteImport.update({
+  id: '/project-intake',
+  path: '/project-intake',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -50,6 +62,8 @@ const WorkSlugRoute = WorkSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/project-intake': typeof ProjectIntakeRoute
   '/services': typeof ServicesRoute
   '/value-packs': typeof ValuePacksRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -58,6 +72,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/project-intake': typeof ProjectIntakeRoute
   '/services': typeof ServicesRoute
   '/value-packs': typeof ValuePacksRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -67,6 +83,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/contact': typeof ContactRoute
+  '/project-intake': typeof ProjectIntakeRoute
   '/services': typeof ServicesRoute
   '/value-packs': typeof ValuePacksRoute
   '/work/$slug': typeof WorkSlugRoute
@@ -75,13 +93,30 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/about' | '/services' | '/value-packs' | '/work/$slug' | '/work/'
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/project-intake'
+    | '/services'
+    | '/value-packs'
+    | '/work/$slug'
+    | '/work/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/services' | '/value-packs' | '/work/$slug' | '/work'
+  to:
+    | '/'
+    | '/about'
+    | '/contact'
+    | '/project-intake'
+    | '/services'
+    | '/value-packs'
+    | '/work/$slug'
+    | '/work'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/contact'
+    | '/project-intake'
     | '/services'
     | '/value-packs'
     | '/work/$slug'
@@ -91,6 +126,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  ContactRoute: typeof ContactRoute
+  ProjectIntakeRoute: typeof ProjectIntakeRoute
   ServicesRoute: typeof ServicesRoute
   ValuePacksRoute: typeof ValuePacksRoute
   WorkSlugRoute: typeof WorkSlugRoute
@@ -111,6 +148,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/project-intake': {
+      id: '/project-intake'
+      path: '/project-intake'
+      fullPath: '/project-intake'
+      preLoaderRoute: typeof ProjectIntakeRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -147,6 +198,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  ContactRoute: ContactRoute,
+  ProjectIntakeRoute: ProjectIntakeRoute,
   ServicesRoute: ServicesRoute,
   ValuePacksRoute: ValuePacksRoute,
   WorkSlugRoute: WorkSlugRoute,
