@@ -32,7 +32,10 @@ function ContactPage() {
   async function onSubmit(e: FormEvent) {
     e.preventDefault();
     const parsed = contactSchema.safeParse(form);
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Please check the form");
+      return;
+    }
     setBusy(true);
     try {
       await send({ data: parsed.data });

@@ -56,7 +56,7 @@ function IntakePage() {
   function validStep() {
     if (step === 0) {
       const r = intakeSchema.pick({ fullName: true, email: true }).safeParse(f);
-      if (!r.success) { toast.error(r.error.issues[0].message); return false; }
+      if (!r.success) { toast.error(r.error.issues[0]?.message ?? "Please check the form"); return false; }
     }
     if (step === 1 && !f.projectType) { toast.error("Choose a project type"); return false; }
     if (step === 2 && (!f.budget || !f.timeline)) { toast.error("Choose a budget and timeline"); return false; }
@@ -65,7 +65,10 @@ function IntakePage() {
 
   async function submit() {
     const parsed = intakeSchema.safeParse(f);
-    if (!parsed.success) return toast.error(parsed.error.issues[0].message);
+    if (!parsed.success) {
+      toast.error(parsed.error.issues[0]?.message ?? "Please check the form");
+      return;
+    }
     setBusy(true);
     try {
       await send({ data: parsed.data });
